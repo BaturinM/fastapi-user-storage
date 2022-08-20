@@ -1,0 +1,9 @@
+uvicorn[standard]
+fastapi
+sqlalchemy
+pytest
+pydantic
+typer
+aioredis
+passlib
+PyJWT
