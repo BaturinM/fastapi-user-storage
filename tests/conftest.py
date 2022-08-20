@@ -10,11 +10,11 @@ from app import models
 from app.database import Base
 from app.dependencies import get_session
 
-SQLALCHEMY_DATABASE_URL = "sqlite+aiosqlite:///./test.db"
+SQLALCHEMY_DATABASE_URL = 'sqlite+aiosqlite:///./test.db'
 
 
 engine = create_async_engine(SQLALCHEMY_DATABASE_URL,
-                             connect_args={"check_same_thread": False})
+                             connect_args={'check_same_thread': False})
 
 TestingSessionLocal = sessionmaker(engine, class_=AsyncSession, autoflush=False)
 
@@ -38,7 +38,7 @@ async def drop_db():
         await connection.run_sync(Base.metadata.drop_all)
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope='session')
 def db_session():
     asyncio.run(create_db())
     yield

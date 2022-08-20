@@ -9,10 +9,10 @@ LOGGING_LEVEL_COLOR_MAP = {
 }
 
 for level, color in LOGGING_LEVEL_COLOR_MAP.items():
-    logging.addLevelName(level, "\033[1;{}m{}\033[1;0m".format(color, logging.getLevelName(level)))
+    logging.addLevelName(level, '\033[1;{}m{}\033[1;0m'.format(color, logging.getLevelName(level)))
 
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 ch = logging.StreamHandler()
 fh = logging.FileHandler(filename='./server.log')

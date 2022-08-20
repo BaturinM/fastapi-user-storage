@@ -8,7 +8,7 @@ from . import models
 from .config import settings
 from .database import SessionLocal
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
 
 
 async def get_session():
@@ -17,7 +17,7 @@ async def get_session():
 
 
 async def get_redis_client():
-    async with Redis.from_url(settings.redis_url) as redis_client:
+    async with Redis.from_url(settings.redis_url, decode_responses=True) as redis_client:
         yield redis_client
 
 
@@ -31,10 +31,10 @@ async def get_current_user(token: str = Depends(get_bearer_token),
 
     user_id = redis_client.get(token)
     if not user_id:
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail='Invalid token')
 
     result: AsyncResult = await session.execute(select(models.User).where(models.User.id == user_id))
     user: models.User = result.scalars().first()
     if not user:
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail="User has been removed")
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail='User has been removed')
     return user

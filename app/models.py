@@ -5,7 +5,7 @@ from .database import Base
 
 
 class User(Base):
-    __tablename__ = "users"
+    __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, index=True)
@@ -22,3 +22,6 @@ class User(Base):
 
     def verify_password(self, password):
         return pwd_context.verify(password, self.hashed_password)
+
+    def __str__(self):
+        return f'{self.email}'

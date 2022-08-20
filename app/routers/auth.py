@@ -10,10 +10,10 @@ from ..services import auth
 security = HTTPBasic()
 
 router = APIRouter(prefix='/auth',
-                   tags=["auth"])
+                   tags=['auth'])
 
 
-@router.post("/token",
+@router.post('/login',
              response_model=schemas.Token)
 async def login_user(credentials: HTTPBasicCredentials = Depends(security),
                      session: AsyncSession = Depends(get_session),
@@ -22,7 +22,7 @@ async def login_user(credentials: HTTPBasicCredentials = Depends(security),
     return result
 
 
-@router.get("/logout")
+@router.get('/logout')
 async def logout_user(token: str = Depends(get_bearer_token),
                       redis_client: Redis = Depends(get_redis_client)):
     result = await auth.logout_user(token, redis_client)
