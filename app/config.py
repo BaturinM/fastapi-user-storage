@@ -2,6 +2,8 @@ from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
+    host: str
+    port: int
     sqlalchemy_database_url: str
     app_email: str
     redis_url: str

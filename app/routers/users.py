@@ -47,7 +47,7 @@ async def confirm_email(code: str,
     return result
 
 
-@router.post('/me',
-             response_model=schemas.User)
+@router.get('/me',
+            response_model=schemas.User)
 async def get_current_user(user=Depends(get_current_user)):
     return user

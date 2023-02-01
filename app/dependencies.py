@@ -29,11 +29,11 @@ async def get_current_user(token: str = Depends(get_bearer_token),
                            session: AsyncSession = Depends(get_session),
                            redis_client: Redis = Depends(get_redis_client)):
 
-    user_id = redis_client.get(token)
+    user_id = await redis_client.get(token)
     if not user_id:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail='Invalid token')
 
-    result: AsyncResult = await session.execute(select(models.User).where(models.User.id == user_id))
+    result: AsyncResult = await session.execute(select(models.User).where(models.User.id == int(user_id)))
     user: models.User = result.scalars().first()
     if not user:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail='User has been removed')
